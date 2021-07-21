@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.title {
+    font-family: 'Righteous', cursive;
+}
+
+/* Inicio do topo */
+.header {
+    background-color: #CF2B2B;
+    color: #FFF;
+    font-size: 44px;
+    width: 100vw;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.header p {
+    font-size: 18px;
+}
