@@ -1,5 +1,4 @@
 let prato, bebida, sobremesa;
-
 function selecionarPrato(item) {
     const selecionado = document.querySelector(".prato .selecionado");
     desmarcarAntigo(selecionado);
@@ -27,19 +26,43 @@ function selecionarSobremesa(item) {
     itemCheckMark.classList.remove("hidden");
     disponibilizarFinal();
 }
-
-function desmarcarAntigo(selecionado){
-    if (selecionado !== null){
+function desmarcarAntigo(selecionado) {
+    if (selecionado !== null) {
         selecionado.classList.remove("selecionado");
         const checkMarkAntigo = selecionado.querySelector(".check-mark");
         checkMarkAntigo.classList.add("hidden");
     }
 }
-
-function disponibilizarFinal(){
-    if (prato !== undefined && bebida !== undefined && sobremesa !== undefined){
+function disponibilizarFinal() {
+    if (prato !== undefined && bebida !== undefined && sobremesa !== undefined) {
         const botao = document.querySelector(".footer button");
         botao.classList.add("final");
         botao.innerHTML = "Fechar pedido";
+        botao.disabled = false;
     }
+}
+function fecharPedido() {
+    let pedido = encodeURIComponent(gerarTextoPedido());
+    window.location.assign("https://wa.me/5566999732624?text=" + pedido)
+}
+function gerarTextoPedido() {
+    const nomePrato = prato.querySelector("h3").innerHTML;
+    const nomeBebida = bebida.querySelector("h3").innerHTML;
+    const nomeSobremesa = sobremesa.querySelector("h3").innerHTML;
+    const textoPedido = `Olá, gostaria de fazer o *pedido*:
+    - *Prato*: ${nomePrato}
+    - *Bebida*: ${nomeBebida}
+    - *Sobremesa*: ${nomeSobremesa}
+    *Total*: R$ *${calcularTotal().toFixed(2)}*`;
+    console.log(textoPedido);
+    return textoPedido;
+}
+function calcularTotal(){
+    const precoPrato = tratarPreco(prato.querySelector(".price").innerHTML);
+    const precoBebida = tratarPreco(bebida.querySelector(".price").innerHTML);
+    const precoSobremesa = tratarPreco(sobremesa.querySelector(".price").innerHTML);
+    return precoPrato + precoBebida + precoSobremesa;
+}
+function tratarPreco(textoPrice){
+    return Number(textoPrice.replace('R$ ','').replace(',','.'));
 }
